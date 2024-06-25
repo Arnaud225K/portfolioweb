@@ -2347,7 +2347,7 @@ textarea.form-control {
 
 .btn:focus, .btn.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(11, 206, 175, 0.25);
+  /*box-shadow: 0 0 0 0.2rem rgba(11, 206, 175, 0.25);*/
 }
 
 .btn.disabled, .btn:disabled {
@@ -2671,7 +2671,8 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary:focus, .btn-outline-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(11, 206, 175, 0.5);
+  /* box-shadow: 0 0 0 0.2rem rgba(11, 206, 175, 0.5); */
+  box-shadow: none;
 }
 
 .btn-outline-primary.disabled, .btn-outline-primary:disabled {
@@ -5628,7 +5629,7 @@ a.close.disabled {
 
 .modal-dialog {
   position: relative;
-  width: auto;
+  max-width: 800px !important;
   margin: 0.5rem;
   pointer-events: none;
 }
@@ -5646,6 +5647,7 @@ a.close.disabled {
 
 .modal.show .modal-dialog {
   transform: none;
+  max-width: 800px !important;
 }
 
 .modal.modal-static .modal-dialog {
@@ -7845,6 +7847,10 @@ button.bg-dark:focus {
   padding-top: 3rem !important;
 }
 
+.block_testimonial{
+  padding-top: 10em !important;
+}
+
 .pr-5,
 .px-5 {
   padding-right: 3rem !important;
@@ -9770,7 +9776,7 @@ h6,
   width: 30px;
   text-align: center;
   right: 30px;
-  bottom: 30px;
+  bottom: 100px;
   z-index: 11;
   animation: action 1s infinite alternate;
 }
@@ -9975,4 +9981,167 @@ h6,
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+
+/*Modal*/
+#learn-more-Modal .modal-dialog {
+  position: relative;
+  max-width: 800px;
+  margin: 60px auto 0 auto;
+}
+
+#learn-more-Modal .modal-body {
+  position: relative;
+  padding: 0px;
+}
+
+#learn-more-Modal .close {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 0px;
+  top: -30px;
+  z-index: 999;
+  font-size: 30px;
+  font-weight: normal;
+  color: #ffffff;
+  background: #000000;
+  opacity: 1;
+}
+
+#learn-more-Modal .modal-header .close {
+    padding: 0;
+    margin: 0;
+}
+
+#learn-more-Modal .modal-dialog .modal-content{
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 6px;
+  border: none;
+}
+#learn-more-Modal .modal-dialog .modal-header{
+  border-bottom: none;
+  padding-top: 24px;
+  padding-right: 24px;
+  padding-bottom: 0;
+  padding-left: 24px;
+}
+
+#learn-more-Modal .modal-dialog .modal-header .modal-title{
+  font-size: 17px;
+  font-weight: 300;
+  color: #3C4858;
+  margin-bottom: 0;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+#learn-more-Modal .modal-dialog .modal-body {
+  padding-top: 24px;
+  padding-right: 24px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  color: #3C4858;
+}
+
+#learn-more-Modal .btn-link:hover {
+  color: #078571;
+  text-decoration: none;
+}
+
+#learn-more-Modal .modal-dialog .modal-footer{
+  border-top: none;
+  padding: 24px !important;
+}
+
+#learn-more-Modal .modal-dialog .modal-body+.modal-footer{
+  padding-top: 0 !important;
+}
+#learn-more-Modal .modal-dialog .modal-footer button{
+  margin: 0 !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  width: auto;
+}
+
+/*modal learn More service*/
+#learn-more-service-Modal .modal-dialog {
+  position: relative;
+  max-width: 800px;
+  margin: 60px auto 0 auto;
+}
+
+#learn-more-service-Modal .modal-body {
+  position: relative;
+  padding: 0px;
+}
+
+#learn-more-service-Modal .close {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 0px;
+  top: -30px;
+  z-index: 999;
+  font-size: 30px;
+  font-weight: normal;
+  color: #ffffff;
+  background: #000000;
+  opacity: 1;
+}
+
+#learn-more-service-Modal .modal-header .close {
+    padding: 0;
+    margin: 0;
+}
+
+#learn-more-service-Modal .modal-dialog .modal-content{
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 6px;
+  border: none;
+}
+#learn-more-service-Modal .modal-dialog .modal-header{
+  border-bottom: none;
+  padding-top: 24px;
+  padding-right: 24px;
+  padding-bottom: 0;
+  padding-left: 24px;
+}
+
+#learn-more-service-Modal .modal-dialog .modal-header .modal-title{
+  font-size: 17px;
+  font-weight: 300;
+  color: #3C4858;
+  margin-bottom: 0;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+#learn-more-service-Modal .modal-dialog .modal-body {
+  padding-top: 24px;
+  padding-right: 24px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  color: #3C4858;
+}
+
+#learn-more-service-Modal .btn-link:hover {
+  color: #078571;
+  text-decoration: none;
+}
+
+#learn-more-service-Modal .modal-dialog .modal-footer{
+  border-top: none;
+  padding: 24px !important;
+}
+
+#learn-more-service-Modal .modal-dialog .modal-body+.modal-footer{
+  padding-top: 0 !important;
+}
+#learn-more-service-Modal .modal-dialog .modal-footer button{
+  margin: 0 !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  width: auto;
 }

@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-admin.site.site_header = "PortFolio administration"
-admin.site.site_title = "Portfolio admin"
+admin.site.site_header = "Arnok administration"
+admin.site.site_title = "Arnok admin"
+from . import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('arnokadmin/', admin.site.urls),
     path('',include('portfolioapp.urls')),
 ]
 
@@ -28,3 +29,10 @@ handler404="portfolioapp.views.handler400"
 handler403="portfolioapp.views.handler403"
 handler404="portfolioapp.views.handler404"
 handler500="portfolioapp.views.handler500"
+
+if settings.DEBUG:
+	import debug_toolbar
+	
+	urlpatterns += [
+					path('__debug__/', include(debug_toolbar.urls)),
+				]

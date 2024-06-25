@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Arnok</title>
+    <link rel="stylesheet" href="{% static 'css/cv-style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"> 
+</head>
+<body>
+    <main class="main-content">
+        <section class="left-section">
+            <div class="left-content">
+                <div class="profile">
+                    <div class="image">
+                        <img src="{{ portfolio.main_picture.url }}" alt="">
+                    </div>
+                        <h2 class="name">{{portfolio.fullname}} </h2>
+                    {% with portfolio.function_set.all|first as f %}
+                        <p class="career">{{ f.name }}</p>
+                    {% endwith %}
+                </div>
+                <div class="contact-info">
+                    <h3 class="main-title">Contact</h3>
+                    <ul>
+                        <li>
+                            <i class="fa fa-phone"></i>
+                            {{portfolio.phone}}
+                        </li>
+                        <li>
+                            <i class="fa fa-fax"></i>
+                            {{portfolio.email}}
+                        </li>
+                        <li>
+                            <i class="fa fa-globe"></i>
+                            {% for lang in portfolio.language_set.all %}
+                                {{lang.name}}, 
+                            {% endfor %}
+                        </li>
+                        <li>
+                            <i class="fa fa-facebook"></i>
+                            @arnokuakan
+                        </li>
+                        <li>
+                            <i class="fa fa-instagram"></i>
+                            @arnoofgod
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker"></i>
+                            {{portfolio.address}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="skills-section">
+                    <h3 class="main-title">Skills</h3>
+                    <ul>
+                    {% for skill_left in skill_list_left %}
+                        <li>
+                            <p class="skill-title">{{skill_left.skill_name}}</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width:{{skill_left.percent}}%"></div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    {% for skill_rigth in skill_list_rigth %}
+                        <li>
+                            <p class="skill-title">{{skill_rigth.skill_name}}</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width:{{skill_rigth.percent}}%"></div>
+                            </div>
+                        </li>
+                    {% endfor %}  
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="right-section">
+            <div class="right-main-content">
+                <section class="about sect">
+                    <h2 class="right-title">About Me</h2>
+                    <p class="para">
+                        {{portfolio.about_me|safe}}
+                    </p>
+                </section>
+
+                <section class="experince sect">
+                    <h2 class="right-title">Experience</h2>
+                    {% for experience in experience_list %}
+                    <div class="timeline">
+                        <div class="left-tl-content">
+                            <h5 class="tl-title">{{experience.quality_name}}</h5>
+                            <p class="para">{{experience.started_at|date:"Y"}} - {{experience.ended_at|date:"Y"}}</p>
+                        </div>
+                        <div class="right-tl-content">
+                            <div class="tl-content">
+                                <h5 class="tl-title-2">{{experience.location}}</h5>
+                                <p class="para">
+                                    {{experience.description|safe}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </section>
+
+                <section class="education sect">
+                    <h2 class="right-title">education</h2>
+                    {% for education in education_list %}
+                    <div class="timeline">
+                        <div class="left-tl-content">
+                            <h5 class="tl-title">{{education.quality_name}}</h5>
+                            <p class="para">{{education.started_at|date:"Y"}} - {{education.ended_at|date:"Y"}}</p>
+                        </div>
+                        <div class="right-tl-content">
+                            <div class="tl-content">
+                                <h5 class="tl-title-2">{{education.location}}</h5>
+                                <p class="para">
+                                   {{education.description|safe}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </section>
+                <section class="awards sect">
+                    <h2 class="right-title">Awards</h2>
+                    <div class="timeline">
+                        <div class="left-tl-content">
+                            <h5 class="tl-title">Microsoft</h5>
+                            <p class="para">June 2023</p>
+                        </div>
+                        <div class="right-tl-content">
+                            <div class="tl-content">
+                                <h5 class="tl-title-2">Excellent Work</h5>
+                                <p class="para">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate vitae 
+                                    voluptatem deleniti, 
+                                    laboriosam odio nobis quae fugit facilis quo.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <div class="left-tl-content">
+                            <h5 class="tl-title">Alphabet Inc</h5>
+                            <p class="para">June 2021</p>
+                        </div>
+                        <div class="right-tl-content">
+                            <div class="tl-content">
+                                <h5 class="tl-title-2">The Star Employee</h5>
+                                <p class="para">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate vitae 
+                                    voluptatem deleniti, 
+                                    laboriosam odio nobis quae fugit facilis quo.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

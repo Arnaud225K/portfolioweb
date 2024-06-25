@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from decouple import config
 
 load_dotenv()
 
@@ -27,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = os.environ.get('DEBUG') == 'False'
 
 ALLOWED_HOSTS = ['*']
 
@@ -35,13 +36,21 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tinymce',
     'portfolioapp',
+    'blog',
+    'gallery',
+    'service',
+    'contact',
+    'quality',
+    'skill',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +147,211 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#debug toolbar configuration 
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+  
+    DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+        'debug_toolbar.panels.profiling.ProfilingPanel',
+    ]
+    
+    INTERNAL_IPS = ('127.0.0.1',)
+
+
+
+
+# DJANGO JAZZMIN SETTINGS
+JAZZMIN_SETTINGS = {
+    "site_title": "Arnok",
+    "site_header": "Arnok",
+    "site_brand": "Arnok administration",
+    "site_icon": "images/favicon.png",
+    # Add your own branding here
+    "site_logo": None,
+    # "site_logo": "books/img/logo.png",
+
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": None,
+
+    # Logo to use for login form in dark themes (defaults to login_logo)
+    "login_logo_dark": None,
+
+    "welcome_sign": "Welcome | Arnok administration site",
+    # Copyright on the footer
+    "copyright": "Arnok",
+    "user_avatar": None,
+    ############
+    # Top Menu #
+    ############
+    # Links to put along the top menu
+    "topmenu_links": [
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Arnok", "url": "admin:index", "permissions": ["auth.view_user"]},
+        # model admin to link to (Permissions checked against model)
+        {"model": "auth.User"},
+         # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "portfolioapp"},
+    ],
+    #############
+    # Side Menu #
+    #############
+    # Whether to display the side menu
+    "show_sidebar": True,
+    # Whether to aut expand the menu
+    "navigation_expanded": True,
+    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # for the full list of 5.13.0 free icon classes
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "users.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "admin.LogEntry": "fas fa-file",
+        # "portfolioapp.Function": "fas fa-outdent",
+        # "portfolioapp.Language": "fas fa-language",
+        # "portfolioapp.Sociallink": "fas fa-share-square",
+        "portfolioapp.Owner": "fas fa-user-graduate",
+    },
+    # # Icons that are used when one is not manually specified
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-arrow-circle-right",
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    "related_modal_active": True,
+    #############
+    # UI Tweaks #
+    #############
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    # Uncomment this line once you create the bootstrap-dark.css file
+    # "custom_css": "css/bootstrap-dark.css",
+    "custom_js": None,
+    # Whether to show the UI customizer on the sidebar
+    "show_ui_builder": False,
+    ###############
+    # Change view #
+    ###############
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+}
+
+# JAZZMIN_UI_TWEAKS = {
+#     "navbar_small_text": False,
+#     "footer_small_text": False,
+#     "body_small_text": False,
+#     "brand_small_text": False,
+#     "brand_colour": "navbar-teal",
+#     "accent": "accent-teal",
+#     "navbar": "navbar-teal navbar-dark",
+#     "no_navbar_border": False,
+#     "navbar_fixed": False,
+#     "layout_boxed": False,
+#     "footer_fixed": False,
+#     "sidebar_fixed": False,
+#     "sidebar": "sidebar-dark-teal",
+#     "sidebar_nav_small_text": False,
+#     "sidebar_disable_expand": False,
+#     "sidebar_nav_child_indent": False,
+#     "sidebar_nav_compact_style": False,
+#     "sidebar_nav_legacy_style": False,
+#     "sidebar_nav_flat_style": False,
+#     "theme": "default",
+#     "dark_mode_theme": "darkly",
+#     "button_classes": {
+#         "primary": "btn-primary",
+#         "secondary": "btn-secondary",
+#         "info": "btn-info",
+#         "warning": "btn-warning",
+#         "danger": "btn-danger",
+#         "success": "btn-success"
+#     }
+# }
+
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-teal",
+    "accent": "accent-teal",
+    "navbar": "navbar-teal navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-teal",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": True,
+    "theme": "solar",
+    "dark_mode_theme": "darkly",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
+
+
+
+# #HTTPS Settings Producutiom 
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+
+# dev environnement
+#HTTPS Settings
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
+
+#HSTS settings
+SECURE_HSTS_SECONDS = 31536000 # 1 year
+SECURE_HSTS_PRELOAD = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+# Default Email config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
+
+# https://www.google.com/recaptcha/about/
+
+# #recaptchas
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY', default='')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY', default='')
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

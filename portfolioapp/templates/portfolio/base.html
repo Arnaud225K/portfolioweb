@@ -11,6 +11,8 @@
 
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    {% comment %} <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/> {% endcomment %}
+
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -25,6 +27,8 @@
 
     <!-- Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <script src='https://www.google.com/recaptcha/api.js?render=6LfViecpAAAAAAhlPdYvu76MBCBKhbZV8OR8RKLL'></script>
 
 </head>
 
@@ -53,9 +57,16 @@
     <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
     <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
     <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+    <script type="text/javascript">
+        // Create a variable that can be used in contact.js
+        var recaptcha_site_key = '6LfViecpAAAAAAhlPdYvu76MBCBKhbZV8OR8RKLL'
+    </script>
     <!-- Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/contact.js' %}"></script>
 </body>
 
 </html>

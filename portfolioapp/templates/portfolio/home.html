@@ -3,6 +3,11 @@
 
 {% block content %}
 {% include 'portfolio/includes/modal/modal-video.html' %}
+{% include 'portfolio/includes/modal/modal-learn-more.html' %}
+{% include 'portfolio/includes/modal/modal-learn-more-service.html' %}
+{% include 'portfolio/includes/modal/modal-learn-more-portfolio.html' %}
+{% include 'portfolio/includes/modal/modal-learn-more-portfolio-dev.html' %}
+{% include 'portfolio/includes/modal/modal-learn-more-portfolio-app.html' %}
 {% include 'portfolio/includes/intro/intro.html' %}
  <!-- About me Start -->
     <div class="container-fluid py-5" id="about">
@@ -13,30 +18,34 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-lg-5 pb-4 pb-lg-0">
-                    <img class="img-fluid rounded w-100" src="{% static 'img/about.jpg' %}" alt="">
+                    <img class="img-fluid rounded w-100" src="{{ owner_info.main_picture.url }}" alt="">
                 </div>
                 <div class="col-lg-7">
-                    <h3 class="mb-1">Web Developer</h3>
-                    <p>
-                        Hello! My name is Arno, I am from Ivory Coast, Full stack developer and experienced with all stages 
-                        of the development cycle of dynamic web projects. Good knowledge of many programming languages, 
-                        including HTML5, CSS, Bootstrap, Python, Django, JavaScript, TypeScript, ReactJS and Windev. 
-                        I have already worked in a startup environment and I have excellent knowledge in data analysis and 
-                        also a good experience in project management.WHY SHOULD WE WORK TOGETHER? 🏆 I am Rigorous, very Dedicated. 
-                        I have a sense of Responsibility and Teamwork.
-                    </p>
+                    {% with owner_info.function_set.all|first as f %}
+                        <h3 class="mb-1">{{ f.name }}</h3>
+                    {% endwith %}
+                    <p>{{owner_info.about_me|safe}}</p>
                     <div class="row mb-3">
-                        <div class="col-sm-6 py-2"><h6>Name: <span class="text-secondary">Arno Kuakan</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Language: <span class="text-secondary">French, English, Russian</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Degree: <span class="text-secondary">Master</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Experience: <span class="text-secondary">3 Years</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Phone: <span class="text-secondary">+7 908 076 4218</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Email: <span class="text-secondary">info@arnok.com</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Address: <span class="text-secondary">Malysheva 144, Ekarterinburg</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Freelance: <span class="text-secondary">Available</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Name: <span class="text-secondary">{{owner_info.fullname}}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Language: 
+                        <span class="text-secondary">
+                         {% for lang in owner_info.language_set.all %}
+                            {{lang.name}}, 
+                         {% endfor %}
+                        </span>
+                        </h6></div>
+                        <div class="col-sm-6 py-2"><h6>Degree: <span class="text-secondary">{{owner_info.degree}}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Experience: <span class="text-secondary">{{owner_info.year_experience}}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Phone: <span class="text-secondary">{{owner_info.phone}}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Email: <span class="text-secondary">{{owner_info.email}}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Address: <span class="text-secondary">{{owner_info.address}}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Freelance: <span class="text-secondary">{{owner_info.freelance}}</span></h6></div>
                     </div>
-                    <a href="" class="btn btn-outline-primary mr-4">Hire Me</a>
-                    <a href="" class="btn btn-outline-primary">Learn More</a>
+                    <a href="#contact" class="btn btn-outline-primary mr-4">Hire Me</a>
+                    <a data-target="#learn-more-Modal" data-toggle="modal" class="btn btn-outline-primary" href="#learn-more-Modal">Learn More</a>
+                        {% comment %} <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-src="#" data-target="#learn-more-Modal">
+                            Learn More
+                        </button> {% endcomment %}
                 </div>
             </div>
         </div>
@@ -54,61 +63,29 @@
                 <div class="col-lg-6">
                     <h3 class="mb-4">My Education</h3>
                     <div class="border-left border-primary pt-2 pl-4 ml-2">
+                    {% for education in education_list %}
                         <div class="position-relative mb-4">
                             <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Bachelor in Software Engineering</h5>
+                            <h5 class="font-weight-bold mb-1">{{education.quality_name}}</h5>
                             <p class="mb-2">
-                                <strong>Ural Federal University, Russia</strong> | <small>2018 - 2023</small>
+                                <strong>{{education.location}}</strong> | <small>{{education.started_at|date:"Y"}} - {{education.ended_at|date:"Y"}}</small>
                             </p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                            <p>{{education.description|safe}}</p>
                         </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Professional Bachelor in Software Engineering</h5>
-                            <p class="mb-2"><strong>Arts and Development Training Institute</strong> | <small>2015 - 2017</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">University Degree of Technology in Computer Science</h5>
-                            <p class="mb-2"><strong>Conservatory Institute of Management</strong> | <small>2012 - 2013</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Higher Technician Certificate - Software Developer</h5>
-                            <p class="mb-2"><strong>Modern High School Of Arrah, Ivory Coast</strong> | <small>2013 - 2014</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
+                    {% endfor %}
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <h3 class="mb-4">My Expericence</h3>
                     <div class="border-left border-primary pt-2 pl-4 ml-2">
+                    {% for experience in experience_list %}
                         <div class="position-relative mb-4">
                             <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Web Developer</h5>
-                            <p class="mb-2"><strong>Société de construction et de lotissement</strong> | <small>2000 - 2050</small></p>
-                            <p>-Design and creation of an email marketing API (newsletter) <br> -Testing and correction of anomalies in the newsletter systems <br> -Design and creation of the company's website</p>
+                            <h5 class="font-weight-bold mb-1">{{experience.quality_name}}</h5>
+                            <p class="mb-2"><strong>{{experience.location}}</strong> | <small>{{experience.started_at|date:"Y"}} - {{experience.ended_at|date:"Y"}}</small></p>
+                            <p>{{experience.description|safe}}</p>
                         </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Data Analysis</h5>
-                            <p class="mb-2"><strong>Company Friendly</strong> | <small>2000 - 2050</small></p>
-                            <p>-Design and creation of an email marketing API (newsletter) <br> -Testing and correction of anomalies in the newsletter systems <br> -Design and creation of the company's website</p>
-                        </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Web Designer</h5>
-                            <p class="mb-2"><strong>Soft Company</strong> | <small>2000 - 2050</small></p>
-                            <p>-Design and creation of an email marketing API (newsletter) <br> -Testing and correction of anomalies in the newsletter systems <br> -Design and creation of the company's website</p>
-                        </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Web Developer</h5>
-                            <p class="mb-2"><strong>Soft Company</strong> | <small>2000 - 2050</small></p>
-                            <p>-Design and creation of an email marketing API (newsletter) <br> -Testing and correction of anomalies in the newsletter systems <br> -Design and creation of the company's website</p>
-                        </div>
+                    {% endfor %}
                     </div>
                 </div>
             </div>
@@ -116,7 +93,7 @@
     </div>
 <!-- My Qualification End -->
 
-<!-- Skill Start -->
+<!-- My Skill Start -->
     <div class="container-fluid py-5" id="skill">
         <div class="container">
             <div class="position-relative d-flex align-items-center justify-content-center">
@@ -125,69 +102,37 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-md-6">
+                    {% for skill_left in skill_list_left %}
                     <div class="skill mb-4">
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-bold">HTML</h6>
-                            <h6 class="font-weight-bold">95%</h6>
+                            <h6 class="font-weight-bold">{{skill_left.skill_name}}</h6>
+                            <h6 class="font-weight-bold">{{skill_left.percent}}%</h6>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar {{skill_left.color}}" role="progressbar" aria-valuenow="{{skill_left.percent}}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
-                    <div class="skill mb-4">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-bold">CSS</h6>
-                            <h6 class="font-weight-bold">85%</h6>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div class="skill mb-4">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-bold">Python</h6>
-                            <h6 class="font-weight-bold">90%</h6>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class="col-md-6">
+                    {% for skill_rigth in skill_list_rigth %}
                     <div class="skill mb-4">
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-bold">Javascript</h6>
-                            <h6 class="font-weight-bold">90%</h6>
+                            <h6 class="font-weight-bold">{{skill_rigth.skill_name}}</h6>
+                            <h6 class="font-weight-bold">{{skill_rigth.percent}}%</h6>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar {{skill_rigth.color}}" role="progressbar" aria-valuenow="{{skill_rigth.percent}}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
-                    <div class="skill mb-4">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-bold">Laravel</h6>
-                            <h6 class="font-weight-bold">75%</h6>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div class="skill mb-4">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-bold">ReactJS</h6>
-                            <h6 class="font-weight-bold">60%</h6>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 <!-- Skill End -->
 
-   <!-- Services Start -->
+   <!-- My Services Start -->
     <div class="container-fluid pt-5" id="service">
         <div class="container">
             <div class="position-relative d-flex align-items-center justify-content-center">
@@ -195,54 +140,16 @@
                 <h1 class="position-absolute text-uppercase text-primary">My Services</h1>
             </div>
             <div class="row pb-3">
+            {% for service in service_list %}
                 <div class="col-lg-4 col-md-6 text-center mb-5">
                     <div class="d-flex align-items-center justify-content-center mb-4">
-                        <i class="fa fa-2x fa-laptop service-icon bg-primary text-white mr-3"></i>
-                        <h4 class="font-weight-bold m-0">Web Design</h4>
+                        <i class="{{service.icon_name}} service-icon bg-primary text-white mr-3"></i>
+                        <h4 class="font-weight-bold m-0">{{service.service_name}}</h4>
                     </div>
-                    <p>Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore eirmod erat clita</p>
-                    <a class="border-bottom border-primary text-decoration-none" href="">Read More</a>
+                    <p>{{service.title|truncatechars:60}}</p>
+                    <a class="border-bottom border-primary text-decoration-none" data-target="#learn-more-service-Modal-{{service.id}}" data-toggle="modal" href="#learn-more-service-Modal">Read More</a>
                 </div>
-                <div class="col-lg-4 col-md-6 text-center mb-5">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <i class="fa fa-2x fa-laptop-code service-icon bg-primary text-white mr-3"></i>
-                        <h4 class="font-weight-bold m-0">Web Development</h4>
-                    </div>
-                    <p>Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore eirmod erat clita</p>
-                    <a class="border-bottom border-primary text-decoration-none" href="">Read More</a>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center mb-5">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <i class="fab fa-2x fa-android service-icon bg-primary text-white mr-3"></i>
-                        <h4 class="font-weight-bold m-0">Apps Design</h4>
-                    </div>
-                    <p>Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore eirmod erat clita</p>
-                    <a class="border-bottom border-primary text-decoration-none" href="">Read More</a>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center mb-5">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <i class="fab fa-2x fa-apple service-icon bg-primary text-white mr-3"></i>
-                        <h4 class="font-weight-bold m-0">Apps Development</h4>
-                    </div>
-                    <p>Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore eirmod erat clita</p>
-                    <a class="border-bottom border-primary text-decoration-none" href="">Read More</a>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center mb-5">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <i class="fa fa-2x fa-search service-icon bg-primary text-white mr-3"></i>
-                        <h4 class="font-weight-bold m-0">SEO</h4>
-                    </div>
-                    <p>Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore eirmod erat clita</p>
-                    <a class="border-bottom border-primary text-decoration-none" href="">Read More</a>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center mb-5">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <i class="fa fa-2x fa-edit service-icon bg-primary text-white mr-3"></i>
-                        <h4 class="font-weight-bold m-0">Content Creating</h4>
-                    </div>
-                    <p>Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore eirmod erat clita</p>
-                    <a class="border-bottom border-primary text-decoration-none" href="">Read More</a>
-                </div>
+            {% endfor %}
             </div>
         </div>
     </div>
@@ -267,74 +174,55 @@
                 </div>
             </div>
             <div class="row portfolio-container">
+                {% for portefolio in portfolio_webdes %}
                 <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
                     <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/portfolio-1.jpg' %}" alt="">
+                        <img class="img-fluid rounded w-100" src="{{ portefolio.main_image.url }}" alt="">
                         <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="#portfolio">
+                            <a data-target="#learn-more-portfolio-Modal-{{portefolio.id}}" data-toggle="modal" href="#learn-more-portfolio-Modal">
                                 <i class="fa fa-link text-white" style="font-size: 30px;"></i>
                             </a>
                         </div>
                     </div>
                 </div>
+			    {% endfor %}
+
+                <div class="clearfix"></div>
+                {% for portefolio in portfolio_webdev %}
                 <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
                     <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/portfolio-2.jpg' %}" alt="">
+                        <img class="img-fluid rounded w-100" src="{{ portefolio.main_image.url }}" alt="">
                         <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="#portfolio">
+                            <a data-target="#learn-more-portfolio-dev-Modal-{{portefolio.id}}" data-toggle="modal" href="#learn-more-portfolio-dev-Modal">
                                 <i class="fa fa-link text-white" style="font-size: 30px;"></i>
                             </a>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+
+                <div class="clearfix"></div>
+                {% for portefolio in portfolio_appdev %}
                 <div class="col-lg-4 col-md-6 mb-4 portfolio-item third">
                     <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/portfolio-3.jpg' %}" alt="">
+                        <img class="img-fluid rounded w-100" src="{{ portefolio.main_image.url }}" alt="">
                         <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="#portfolio">
+                            <a data-target="#learn-more-portfolio-app-Modal-{{portefolio.id}}" data-toggle="modal" href="#learn-more-portfolio-app-Modal">
                                 <i class="fa fa-link text-white" style="font-size: 30px;"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/portfolio-4.jpg' %}" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="#portfolio">
-                                <i class="fa fa-link text-white" style="font-size: 30px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/portfolio-5.jpg' %}" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="#portfolio">
-                                <i class="fa fa-link text-white" style="font-size: 30px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item third">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/portfolio-6.jpg' %}" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="#portfolio">
-                                <i class="fa fa-link text-white" style="font-size: 30px;"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
     <!-- Portfolio End -->
 
-
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
     <!-- Testimonial Start -->
-    <div class="container-fluid py-5" id="testimonial">
+    <div class="container-fluid py-5 block-testimonial" id="testimonial">
         <div class="container">
             <div class="position-relative d-flex align-items-center justify-content-center">
                 <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Review</h1>
@@ -343,80 +231,21 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="owl-carousel testimonial-carousel">
+                    {% for review in review_list %}
                         <div class="text-center">
                             <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                            <h4 class="font-weight-light mb-4">He has done his job competently, and a large catalog of all the different product categories of our pizzeria "Martin Pizza" has been integrated into an eye-catching design</h4>
-                            <img class="img-fluid rounded-circle mx-auto mb-3" src="{% static 'img/testimonial-1.jpg' %}" style="width: 80px; height: 80px;">
-                            <h5 class="font-weight-bold m-0">Client Name</h5>
-                            <span>Profession</span>
+                            <h4 class="font-weight-light mb-4">{{ review.message }}</h4>
+                            <img class="img-fluid rounded-circle mx-auto mb-3" src="{{ review.picture.url }}" style="width: 80px; height: 80px;">
+                            <h5 class="font-weight-bold m-0">{{ review.name }}</h5>
+                            <span>{{ review.profession }}</span>
                         </div>
-                        <div class="text-center">
-                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                            <h4 class="font-weight-light mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam</h4>
-                            <img class="img-fluid rounded-circle mx-auto mb-3" src="{% static 'img/testimonial-2.jpg' %}" style="width: 80px; height: 80px;">
-                            <h5 class="font-weight-bold m-0">Client Name</h5>
-                            <span>Profession</span>
-                        </div>
-                        <div class="text-center">
-                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                            <h4 class="font-weight-light mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam</h4>
-                            <img class="img-fluid rounded-circle mx-auto mb-3" src="{% static 'img/testimonial-3.jpg' %}" style="width: 80px; height: 80px;">
-                            <h5 class="font-weight-bold m-0">Client Name</h5>
-                            <span>Profession</span>
-                        </div>
+                    {% endfor %}    
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Testimonial End -->
-
-
-    <!-- Blog Start -->
-    <div class="container-fluid pt-5" id="blog">
-        <div class="container">
-            <div class="position-relative d-flex align-items-center justify-content-center">
-                <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Blog</h1>
-                <h1 class="position-absolute text-uppercase text-primary">Latest Blog</h1>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 mb-5">
-                    <div class="position-relative mb-4">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/blog-1.jpg' %}" alt="">
-                        <div class="blog-date">
-                            <h4 class="font-weight-bold mb-n1">01</h4>
-                            <small class="text-white text-uppercase">Jan</small>
-                        </div>
-                    </div>
-                    <h5 class="font-weight-medium mb-4">Rebum lorem no eos ut ipsum diam tempor sed rebum elitr ipsum</h5>
-                    <a class="btn btn-sm btn-outline-primary py-2" href="">Read More</a>
-                </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="position-relative mb-4">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/blog-2.jpg' %}" alt="">
-                        <div class="blog-date">
-                            <h4 class="font-weight-bold mb-n1">12</h4>
-                            <small class="text-white text-uppercase">Fev</small>
-                        </div>
-                    </div>
-                    <h5 class="font-weight-medium mb-4">Rebum lorem no eos ut ipsum diam tempor sed rebum elitr ipsum</h5>
-                    <a class="btn btn-sm btn-outline-primary py-2" href="">Read More</a>
-                </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="position-relative mb-4">
-                        <img class="img-fluid rounded w-100" src="{% static 'img/blog-3.jpg' %}" alt="">
-                        <div class="blog-date">
-                            <h4 class="font-weight-bold mb-n1">01</h4>
-                            <small class="text-white text-uppercase">Mars</small>
-                        </div>
-                    </div>
-                    <h5 class="font-weight-medium mb-4">Rebum lorem no eos ut ipsum diam tempor sed rebum elitr ipsum</h5>
-                    <a class="btn btn-sm btn-outline-primary py-2" href="">Read More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Blog End -->
 
 
     <!-- Contact Start -->
@@ -430,35 +259,35 @@
                 <div class="col-lg-8">
                     <div class="contact-form text-center">
                         <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                        {% comment %} <form name="sentMessage" id="contactForm" novalidate="novalidate"> {% endcomment %}
+                        <form name="contactForm" id="contactForm" method="POST" action="" autocomplete="off">
+                            {% csrf_token %}
                             <div class="form-row">
                                 <div class="control-group col-sm-6">
-                                    <input type="text" class="form-control p-4" id="name" placeholder="Your Name"
-                                        required="required" data-validation-required-message="Please enter your name" />
+                                    {{c_form.name}}
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="control-group col-sm-6">
-                                    <input type="email" class="form-control p-4" id="email" placeholder="Your Email"
-                                        required="required" data-validation-required-message="Please enter your email" />
+                                    {{c_form.email}}
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <input type="text" class="form-control p-4" id="subject" placeholder="Subject"
-                                    required="required" data-validation-required-message="Please enter a subject" />
+                                {{c_form.subject}}
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                                <textarea class="form-control py-3 px-4" rows="5" id="message" placeholder="Message"
-                                    required="required"
-                                    data-validation-required-message="Please enter your message"></textarea>
+                                {{c_form.message}}
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div>
-                                <button class="btn btn-outline-primary" type="submit" id="sendMessageButton">Send
-                                    Message</button>
+                                {{c_form.token}}
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-primary" type="submit" id="sendMessageButton" value="func">Send Message</button>
                             </div>
                         </form>
+                        {{c_form.errors}}
                     </div>
                 </div>
             </div>
