@@ -2,7 +2,10 @@
 
 set -e
 
-source /env/bien/activate
+source /env/bin/activate
+python manage.py makemigrations
+python manage.py migrate
+
 
 if [$1 == 'gunicorn']; then
 
